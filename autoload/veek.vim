@@ -73,7 +73,7 @@ function! s:__split_num_to_args__minus(v000) "{{{
 endfunction
 "}}}
 function! s:__split_num_to_args__name(v000) "{{{
-  return [a:v000[0]] + s:___split_msg_to_args(a:v000[1:]) + [0]
+  return [[a:v000[0]]] + s:___split_msg_to_args(a:v000[1:]) + [0]
 endfunction
 "}}}
 function! s:__split_num_to_args__unknown(v000) "{{{
@@ -112,6 +112,14 @@ endfunction
 "}}}
 function! s:__get_expr__minus(qargs, _is_msg) "{{{
   let q = substitute(a:qargs, '^-\d\+,\s*\(-\?\d\+,\s*\)\?', '', '')
+  if a:_is_msg
+    let q = s:___rmv_msg(q)
+  endif
+  return q
+endfunction
+"}}}
+function! s:__get_expr__name(qargs, _is_msg) "{{{
+  let q = substitute(a:qargs, '^\(".\{-,}"\|''.\{-,}[^'']''\),\s*', '', '')
   if a:_is_msg
     let q = s:___rmv_msg(q)
   endif
