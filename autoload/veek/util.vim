@@ -16,6 +16,7 @@ endfunction
 
 function! veek#util#veeks_echo(veeks) "{{{
   let veeks = type(a:veeks) == type([]) ? a:veeks : [a:veeks]
+  let echo = []
   for g in veeks
     let info = printf("%4s%3s: %-45s (%s)%s\n          %s",
       \'['.g.ago.']',
@@ -24,8 +25,9 @@ function! veek#util#veeks_echo(veeks) "{{{
       \ (g.msg!='' ? "\n".'         #comment:   '. g.msg : ''),
       \ string(g.val)
       \ )
-    echo info
+    call add(echo, info)
   endfor
+  echo join(echo, "\n")
 endfunction
 "}}}
 "=============================================================================
